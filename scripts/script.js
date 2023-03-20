@@ -4,11 +4,11 @@ var canvas = document.getElementById("canvas")
 var c = canvas.getContext('2d')
 var drag = false;
 var color = [
-  '#334D5C',
-  '#45B29D',
-  '#EFC94C',
-  '#E27A3F',
-  '#DF5A49'
+  '#D92B9C',
+  '#F2CB57',
+  '#BF5B04',
+  '#D99E89',
+  '#730C02'
 ]
 canvas.width = innerWidth;
 canvas.height = innerHeight;

@@ -1,106 +1,118 @@
-/* bron: https://codepen.io/joshMEA/pen/axbjJN */
+/* bron: https://codepen.io/Kuiae/pen/rRQPRb */
 
-// Particle settings - Change these values to see what you can make this canvas do!
-let maxRadius = 100;
-let fadeOutOpacity = 0.025;
-let radiusIncrementMax = 0.9;
-let velocityIncrementMax = 1;
-let randRadiusMax = 20;
-let amtParticles = 20;
-
-const arcIncrement = 0.05;
-
-
-
-// const img = new Image();
-// img.src = 'https://www.johngreengo.com/wp-content/uploads/2021/12/JG-micro-round-RGB2-2000.png';
-
-////////////////////////////////////////////////////////
-
-const canvas = document.querySelector('canvas');
-let mousePos = {
-    x: -500,
-    y: -500
-};
-
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
-
-let ctx = canvas.getContext('2d');
-
-let particlesArray = [];
-
-function Particle(x, y, radius) {
-    let posOrNeg = Math.random() + 0.1 > 0.5 ? '+' : '-';
-    let randNumX = `${posOrNeg}${Math.random() * velocityIncrementMax + 0.5}`;
-    let randNumY = `${posOrNeg}${Math.random() * velocityIncrementMax + 0.5}`;
-    let radiusIncrement = Math.random() * radiusIncrementMax;
-
-    this.radius = radius;
-    this.x = x;
-    this.y = y;
-    this.startAngle = 0;
-    this.endAngle = 2 * Math.PI;
-    this.arcVal = Math.PI * 2;
-    // this.antiClockwise = false;
-    this.antiClockwise = Math.random() > 0.5;
-
-    this.opacity = 1;
-
-    this.rVal = Math.floor(Math.random() * 255) + 1;
-    this.gVal = Math.floor(Math.random() * 255) + 1;
-    this.bVal = Math.floor(Math.random() * 255) + 1;
-  
-    // this.rVal = 72;
-    // this.gVal = 158;
-    // this.bVal = 68;
-
-    this.xVel = parseInt(randNumX);
-    this.yVel = parseInt(randNumY);
-
-    this.draw = () => {
-        this.opacity -= fadeOutOpacity;
-        this.x += this.xVel;
-        this.y += this.yVel;
-        this.radius += radiusIncrement;
-        const maxRad = 2 * Math.PI;
-        const currentRad = arcIncrement * Math.PI;
-
-        if (this.radius <= 0) this.radius = 0.01;
-      
-        // ctx.drawImage(img, this.x, this.y, this.radius, this.radius);
-      
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, this.startAngle, this.arcVal, this.antiClockwise);
-        ctx.strokeStyle = `rgba(${this.rVal}, ${this.gVal}, ${this.bVal}, ${this.opacity})`;
-        ctx.stroke();
-
-        if (this.opacity <= 0) {
-            let index = particlesArray.indexOf(this);
-            particlesArray.splice(index, 1);
-        }
-    }
-
+var canvas = document.getElementById("canvas")
+var c = canvas.getContext('2d')
+var drag = false;
+var color = [
+  '#334D5C',
+  '#45B29D',
+  '#EFC94C',
+  '#E27A3F',
+  '#DF5A49'
+]
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+var mouse = {
+  x : 0,
+  y : 0
 }
 
-canvas.addEventListener('mousemove', e => {
-    mousePos = {
-        x: e.clientX,
-        y: e.clientY
-    };
-
-    for (let i = 0; i < amtParticles; i++) {
-        let randRadius = Math.floor(Math.random() * randRadiusMax);
-        particlesArray.push(new Particle(mousePos.x, mousePos.y, randRadius));
+function random(min,max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+var radius = 5
+var Circle = function(x,y,radius,color) {
+  this.radius = Math.floor(Math.random() *radius + 1)
+  this.color = color
+  this.dx = (Math.random() - 0.5) * 5;
+  this.dy = (Math.random() - 0.5) * 5;
+  this.pos = {
+    x : x,
+    y : y
+  }
+}
+Circle.prototype.update = function(){
+  this.pos.x += this.dx;
+  this.pos.y += this.dy
+    if(this.pos.x + this.radius > canvas.width || this.pos.x - this.radius < 0){
+      this.dx = -this.dx
     }
+    if(this.pos.y + radius > canvas.height || this.pos.y - radius < 0){
+      this.dy = -this.dy
+    }
+
+    if (this.pos.x + this.radius * 2 > mouse.x && mouse.x != 0){
+      this.dx -= 1
+    }
+    if (this.pos.x < mouse.x - this.radius * 2 && mouse.x != 0){
+      this.dx += 1.5
+    }
+
+    if (this.dx > 5)
+      this.dx -=1
+
+    if (this.pos.y + this.radius * 2 > mouse.y + this.radius * 1 && mouse.y != 0){
+      this.dy -= 1
+    }
+    if (this.pos.y < mouse.y - this.radius * 2 && mouse.y != 0){
+      this.dy += 1.5
+    }
+
+    if (this.dy > 5)
+      this.dy -=1
+
+}
+Circle.prototype.render = function(){
+    c.beginPath();
+    c.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI * 2, false)
+    c.fillStyle = this.color
+    c.strokeStyle = this.color
+    c.fill();
+    c.stroke();
+}
+Circle.prototype.initCircle = function() {
+  this.pos = {
+    // x : Math.random() * (canvas.width - this.radius * 2) + this.radius,
+    // y : Math.random() * (canvas.height - this.radius * 2) + this.radius
+  }
+}
+
+
+addEventListener("mousemove", function(event) {
+  mouse.x = event.clientX;
+  mouse.y = event.clientY;
 });
 
 
-function animate() {
-    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    particlesArray.forEach(particle => particle.draw());
-    requestAnimationFrame(animate);
 
+/* ---- Functions ---- */
+
+
+var circle = [];
+for (var i = 0; i < 10 ; i++) {
+    var randomX = Math.random() * (canvas.width - radius * 1) + radius
+    var randomY = Math.random() * (canvas.height - radius * 1) + radius
+    circle.push(new Circle(randomX,randomY, radius, color[Math.floor(Math.random() * color.length)]))
 }
+c.fillStyle = "rgba(0,0,0,0.1)";
+c.fillRect(0,0,canvas.width,canvas.height)
+c.fill();
 
-animate();
+function loop(){
+    c.fillStyle='rgba(255, 255, 255, 0.3)';
+    c.fillRect(0, 0, canvas.width, canvas.height);
+    
+    c.beginPath();
+    c.fillStyle = "black";
+    c.textAlign = "center";
+    c.font = "80px Sans-serif";
+    c.fillText("Move Mouse",canvas.width/2, canvas.height/2);
+    c.closePath();
+    for (var i = 0; i < circle.length ; i++) {
+      circle[i].update();
+      circle[i].render();
+    }
+
+    requestAnimationFrame(loop);
+}
+loop();

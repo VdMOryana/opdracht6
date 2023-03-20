@@ -106,7 +106,7 @@ function loop(){
     c.fillStyle = "black";
     c.textAlign = "center";
     c.font = "80px Sans-serif";
-    c.fillText("Move Mouse",canvas.width/2, canvas.height/2);
+    c.fillText("Move & click",canvas.width/2, canvas.height/2);
     c.closePath();
     for (var i = 0; i < circle.length ; i++) {
       circle[i].update();

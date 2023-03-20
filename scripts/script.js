@@ -115,7 +115,7 @@ function loop(){
     c.fillStyle = "black";
     c.textAlign = "center";
     c.font = "80px Sans-serif";
-    c.fillText("Move",canvas.width/2, canvas.height/2);
+    c.fillText("Move en click tot de bolletjes verdwijnen!",canvas.width/2, canvas.height/2);
     c.closePath();
     for (var i = 0; i < circle.length ; i++) {
       circle[i].update();

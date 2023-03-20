@@ -1,0 +1,43 @@
+/* bron: https://codepen.io/prathammpurohit/pen/ExeKPgq */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  body{
+    background-color: black;
+  }
+  .blob{
+    height: 250px;
+    background-color: white;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    background: linear-gradient(to right, aquamarine, mediumpurple);
+    animation: rotate 2s ease-in-out infinite;
+    /* z-index: -1; */
+  }
+  @keyframes rotate {
+    0%{
+      transform: rotate(0deg);
+    }
+    50%{
+      scale: 1 1.5;
+    }
+    100%{
+      transform: rotate(360deg);
+    }
+  }
+  .main{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    backdrop-filter:blur(100px) ;
+  }

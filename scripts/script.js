@@ -108,9 +108,22 @@ c.fillStyle = "rgba(0,0,0,0.1)";
 c.fillRect(0,0,canvas.width,canvas.height)
 c.fill();
 
+// Kies een willekeurige index voor de color array
+let randomIndex = Math.floor(Math.random() * color.length);
+
+// Selecteer de kleur op basis van de willekeurige index
+let selectedColor = color[randomIndex];
+
 function loop(){
     c.fillStyle='rgba(0, 0, 0, 0.3)';
     c.fillRect(0, 0, canvas.width, canvas.height);
+
+    c.beginPath();
+    c.fillStyle = selectedColor;
+    c.textAlign = "center";
+    c.font = "80px raleway";
+    c.fillText("Move en click tot de bolletjes verdwijnen!",canvas.width/2, canvas.height/2);
+    c.closePath();
 
     for (var i = 0; i < circle.length ; i++) {
       circle[i].update();

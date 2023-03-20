@@ -18,7 +18,7 @@
     left: 50%;
     top: 50%;
     translate: -50% -50%;
-    background: linear-gradient(to right, aquamarine, mediumpurple);
+    background: linear-gradient(to right, pink, mediumpurple);
     animation: rotate 2s ease-in-out infinite;
     /* z-index: -1; */
   }

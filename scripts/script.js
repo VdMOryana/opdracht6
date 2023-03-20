@@ -1,3 +1,5 @@
+/* bron: https://codepen.io/joshMEA/pen/axbjJN */
+
 // Particle settings - Change these values to see what you can make this canvas do!
 let maxRadius = 100;
 let fadeOutOpacity = 0.025;

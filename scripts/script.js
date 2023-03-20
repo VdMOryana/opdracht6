@@ -4,11 +4,11 @@ var canvas = document.getElementById("canvas")
 var c = canvas.getContext('2d')
 var drag = false;
 var color = [
-  '#D92B9C',
-  '#F2CB57',
-  '#BF5B04',
-  '#D99E89',
-  '#730C02'
+  '#B38BFC',
+  '#F26F68',
+  '#E6006D',
+  '#98FC83',
+  '#F2AF67'
 ]
 canvas.width = innerWidth;
 canvas.height = innerHeight;
@@ -77,7 +77,6 @@ Circle.prototype.initCircle = function() {
   }
 }
 
-
 addEventListener("mousemove", function(event) {
   mouse.x = event.clientX;
   mouse.y = event.clientY;
@@ -94,6 +93,8 @@ addEventListener("click", function(event) {
     }
   });  
 
+
+  
 /* ---- Functions ---- */
 
 
@@ -108,15 +109,9 @@ c.fillRect(0,0,canvas.width,canvas.height)
 c.fill();
 
 function loop(){
-    c.fillStyle='rgba(255, 255, 255, 0.3)';
+    c.fillStyle='rgba(0, 0, 0, 0.3)';
     c.fillRect(0, 0, canvas.width, canvas.height);
-    
-    c.beginPath();
-    c.fillStyle = "black";
-    c.textAlign = "center";
-    c.font = "80px Sans-serif";
-    c.fillText("Move en click tot de bolletjes verdwijnen!",canvas.width/2, canvas.height/2);
-    c.closePath();
+
     for (var i = 0; i < circle.length ; i++) {
       circle[i].update();
       circle[i].render();
@@ -125,3 +120,4 @@ function loop(){
     requestAnimationFrame(loop);
 }
 loop();
+

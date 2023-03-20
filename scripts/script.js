@@ -24,8 +24,8 @@ var radius = 5
 var Circle = function(x,y,radius,color) {
   this.radius = Math.floor(Math.random() *radius + 1)
   this.color = color
-  this.dx = (Math.random() - 0.5) * 5;
-  this.dy = (Math.random() - 0.5) * 5;
+  this.dx = (Math.random() - 0.5) * 2;
+  this.dy = (Math.random() - 0.5) * 2;
   this.pos = {
     x : x,
     y : y
@@ -83,7 +83,16 @@ addEventListener("mousemove", function(event) {
   mouse.y = event.clientY;
 });
 
-
+addEventListener("click", function(event) {
+    for (var i = 0; i < circle.length; i++) {
+      var distX = Math.abs(circle[i].pos.x - mouse.x);
+      var distY = Math.abs(circle[i].pos.y - mouse.y);
+      var dist = Math.sqrt(distX * distX + distY * distY);
+      if (dist <= circle[i].radius * 2) {
+        circle[i].initCircle();
+      }
+    }
+  });  
 
 /* ---- Functions ---- */
 
@@ -106,7 +115,7 @@ function loop(){
     c.fillStyle = "black";
     c.textAlign = "center";
     c.font = "80px Sans-serif";
-    c.fillText("Move & click",canvas.width/2, canvas.height/2);
+    c.fillText("Move",canvas.width/2, canvas.height/2);
     c.closePath();
     for (var i = 0; i < circle.length ; i++) {
       circle[i].update();

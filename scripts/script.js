@@ -121,7 +121,7 @@ function loop(){
     c.beginPath();
     c.fillStyle = selectedColor;
     c.textAlign = "center";
-    c.font = "80px raleway";
+    c.font = "75px raleway";
     c.fillText("Move en click tot de bolletjes verdwijnen!",canvas.width/2, canvas.height/2);
     c.closePath();
 
